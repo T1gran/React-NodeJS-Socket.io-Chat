@@ -1,6 +1,7 @@
 import React from "react";
 import socket from "../socket";
 import axios from 'axios';
+import { io } from "socket.io-client";
 
 
 function JoinBlock({onLogin}) {

@@ -8,5 +8,6 @@ export default (state, action) => {
                 ethAddress: action.payload.ethAddress, 
             }
         default:
+            return state;
     }
-}
+};

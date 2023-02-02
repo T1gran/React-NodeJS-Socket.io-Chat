@@ -1,8 +1,8 @@
 import React from 'react';
 import JoinBlock from './components/joinBlock';
-import Chat from './components/chat';
-import socket from './socket';
 import reducer from './components/reducer';
+import socket from './socket';
+import RequestPage from './components/requestPage';
 
 function App() {
   const [state, dispatch] = React.useReducer(reducer, {
@@ -20,12 +20,13 @@ function App() {
   }
 
   console.log(state);
+
   return (
     <div className="App">
-      {!state.joined? (
-        <JoinBlock onLogin={onLogin}></JoinBlock>
+      {!state.joined ? (
+        <JoinBlock onLogin={onLogin} />
       ) : (
-        <Chat></Chat>
+        <RequestPage />
       )}
     </div>
   );
