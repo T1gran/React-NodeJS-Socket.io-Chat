@@ -1,22 +1,17 @@
-const express =  require('express');
+const express = require("express");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
-const server = require('http').Server(app)
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-        methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true
-    }
-});
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+app.use(express.json());
 
 port = 8888;
 hostname='localhost';
 
-app.use(express.json());
-
-const chats = 
+const profile = 
     {
         "ethAddress": "0xc22faf9f506e63e6f4f0088d15e9197b27c77ac7",
         "url": "john",
@@ -33,21 +28,19 @@ const chats =
         }
     };
 
-app.post('/chats', (req, res) => {
-    if (req.body.ethAddress == chats.ethAddress) 
-    {
-        res.json(chats);
-    }
-})
+let messages = ['Message 1', 'Message 2', 'Message 3'];
+let chats = ['chat 1', 'chat2', 'chat 3'];
 
 io.on('connection', (socket) => {
-    socket.on('JOIN', (data) => {
-        console.log(data)
+    socket.on('JOIN', () => {
+        console.log('user connected', socket.id);
     })
-    console.log('user connected', socket.id);
+    socket.on('createConversationRequest', (data) => {
+        console.log('New request', data);
+    })
 });
 
-server.listen(port, (err) => {
+httpServer.listen(port, (err) => {
     if (err) {
         throw Error(err);
     }
