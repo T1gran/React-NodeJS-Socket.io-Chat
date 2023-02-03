@@ -11,7 +11,7 @@ app.use(express.json());
 port = 8888;
 hostname='localhost';
 
-const chats = 
+const profile = 
     {
         "ethAddress": "0xc22faf9f506e63e6f4f0088d15e9197b27c77ac7",
         "url": "john",
@@ -28,23 +28,11 @@ const chats =
         }
     };
 
-
 let messages = ['Message 1', 'Message 2', 'Message 3'];
-
-app.get('/', (req, res) => {
-    res.json(rooms)
-});
-
-app.post('/chats', (req, res) => {
-    if (req.body.ethAddress == chats.ethAddress) 
-    {
-        res.json(chats);
-    }
-})
+let chats = ['chat 1', 'chat2', 'chat 3'];
 
 io.on('connection', (socket) => {
-    socket.on('JOIN', (data) => {
-        console.log(data);
+    socket.on('JOIN', () => {
         console.log('user connected', socket.id);
     })
     socket.on('createConversationRequest', (data) => {
